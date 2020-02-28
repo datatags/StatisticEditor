@@ -1,0 +1,34 @@
+# Sender doesn't have permission to use /statistic
+no-permission: "&cYou do not have permission to use this command."
+# Sender has permission to use /statistic but not permission to edit stats with it
+no-edit-permission: "&cYou do not have permission to use this command to edit statistics."
+# Specified player is not online
+player-not-found: "&cCouldn't find player {player}"
+# Invalid entity type as argument
+invalid-entity: "&cCouldn't parse {argument} as an entity."
+# Invalid material as an argument
+invalid-material: "&cCouldn't parse {argument} as a material."
+# Invalid number for stat value
+invalid-value: "&cCouldn't parse value {value}"
+# Specified stat does not exist
+invalid-stat: "&cNot a valid stat: {stat}"
+# Argument does exist in Material enum but is not a block/item as required by the stat.
+not-a-block: "&c{argument} is not a block."
+not-an-item: "&c{argument} is not an item."
+
+# When /statistic <player> ALL is used and a stat that requires a parameter is encountered
+all-stat-requires-argument: "&e{stat}: requires {argument} parameter"
+# General output for /statistic <player> ALL
+all-stat: "&a{stat}: {value}"
+# Specified stat requires an argument that was not specified
+stat-missing-argument: "&cThis stat requires an argument of type {argument}"
+# Specified stat does not use an argument but was given one
+stat-extra-argument: "&cThis stat does not use an argument."
+# General output for /statistic <player> <stat>
+player-stat: "&a{player}'s {stat} stat has a value of {value}"
+# Same, except when stat has an argument
+player-stat-with-argument: "&a{player}'s {stat} stat has a value of {value} for {argument}"
+# When a stat is set
+stat-set: "&a{player}'s {stat} stat has been set to {value}"
+# Same, but when the stat requires an argument.
+stat-set-with-argument: "&a{player}'s {stat} stat has been set to {value} for {argument}"

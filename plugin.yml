@@ -1,0 +1,18 @@
+name: StatisticEditor
+version: 1.1
+author: AlanZ
+main: me.AlanZ.StatisticEditor.StatisticEditor
+api-version: 1.13
+softdepend: [PlaceholderAPI]
+commands:
+    statistic:
+        usage: /<command> <target> <statistic> [argumentValue] [value]
+        description: Sets or gets a statistic. If there is no argument for the statistic, omit it. If you want to get a statistic, don't put a value.
+        aliases: stats
+permissions:
+    statisticeditor.statistic:
+        description: Use the /statistic command to read statistics.
+        default: OP
+    statisticeditor.editstatistic:
+        description: Use the /statistic command to set statistics.
+        default: OP
