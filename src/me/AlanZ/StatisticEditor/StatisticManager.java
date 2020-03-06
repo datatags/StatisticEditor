@@ -20,9 +20,9 @@ public class StatisticManager {
 		// two birds, one stone by comparing the booleans
 		if ((arg == null) != (stat.getType() == Statistic.Type.UNTYPED)) {
 			if (arg == null) {
-				return new Message("stat-missing-argument").setArgument(stat.getType().toString());
+				return new Message("stat-missing-argument").setArgument(stat.getType().toString()).setStat(stat);
 			} else {
-				return new Message("stat-extra-argument").setArgument(arg);
+				return new Message("stat-extra-argument").setArgument(arg).setStat(stat);
 			}
 		} else if (arg == null && stat.getType() == Statistic.Type.UNTYPED) {
 			if (value == null) {
@@ -31,6 +31,13 @@ public class StatisticManager {
 			player.setStatistic(stat, value);
 			return new Message("stat-set").setPlayer(player).setStat(stat).setValue(value);
 		} else if (stat.getType() == Statistic.Type.ENTITY) {
+			if (arg.equalsIgnoreCase("all")) {
+				CompoundMessage cmsg = new CompoundMessage("all-stat-with-argument");
+				for (EntityType entity : EntityType.values()) {
+					cmsg.add().setPlayer(player).setStat(stat).setArgument(entity).setValue(player.getStatistic(stat, entity));
+				}
+				return cmsg;
+			}
 			EntityType entity;
 			try {
 				entity = EntityType.valueOf(arg.toUpperCase());
@@ -44,6 +51,16 @@ public class StatisticManager {
 			return new Message("set-stat-with-argument").setPlayer(player).setStat(stat).setValue(value).setArgument(entity);
 		} else {
 			boolean item = stat.getType() == Statistic.Type.ITEM;
+			if (arg.equalsIgnoreCase("all")) {
+				CompoundMessage cmsg = new CompoundMessage("all-stat-with-argument");
+				for (Material mat : Material.values()) {
+					if ((item && mat.isItem()) || (!item && mat.isBlock())) {
+						if (player.getStatistic(stat, mat) == 0) continue; // skip the ones with no value
+						cmsg.add().setPlayer(player).setStat(stat).setValue(player.getStatistic(stat, mat)).setArgument(mat);
+					}
+				}
+				return cmsg;
+			}
 			Material mat = Material.matchMaterial(arg);
 			if (mat == null) {
 				return new Message("invalid-material").setArgument(arg);

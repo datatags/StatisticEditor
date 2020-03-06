@@ -96,12 +96,15 @@ public class StatisticCommand implements TabExecutor {
 			}
 			if (stat.getType() == Statistic.Type.UNTYPED) {
 				return results;
-			} else if (stat.getType() == Statistic.Type.ENTITY) {
+			}
+			if (stat.getType() == Statistic.Type.ENTITY) {
+				options.add("ALL");
 				for (EntityType type : EntityType.values()) {
 					options.add(type.toString());
 				}
 			} else if (args[2].length() > 0) { // the material enum has so many things in it, make sure we have at least one filter character
 				boolean item = stat.getType() == Statistic.Type.ITEM;
+				options.add("ALL");
 				for (Material mat : Material.values()) {
 					if (item ? mat.isItem() : mat.isBlock()) options.add(mat.toString());
 				}

@@ -20,6 +20,10 @@ not-an-item: "&c{argument} is not an item."
 all-stat-requires-argument: "&e{stat}: requires {argument} parameter"
 # General output for /statistic <player> ALL
 all-stat: "&a{stat}: {value}"
+# When using /statistic <player> <stat> ALL
+all-stat-with-argument: "&a{stat} {argument}: {value}"
+# When using /statistic <player> <stat> ALL but there are no nonzero results
+all-stat-no-results: "&cNo results."
 # Specified stat requires an argument that was not specified
 stat-missing-argument: "&cThis stat requires an argument of type {argument}"
 # Specified stat does not use an argument but was given one

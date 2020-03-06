@@ -8,15 +8,10 @@ import org.bukkit.entity.Player;
 
 public class Message {
 	protected static StatisticEditor se = null;
-	private String message;
-	private Integer value = null;
+	protected String message;
+	protected Integer value = null;
 	public Message(String type) {
-		try {
-			Integer.parseInt(type); // if it's a number, just let it be the number
-			message = type;
-		} catch (NumberFormatException e) {
-			message = se.getMessage(type);
-		}
+		message = se.getMessage(type);
 	}
 	public Message setPlayer(Player player) {
 		if (player != null) {
@@ -77,5 +72,9 @@ public class Message {
 	}
 	public void send(CommandSender receiver) {
 		receiver.sendMessage(getMessage());
+	}
+	public void reset(String type) {
+		this.message = se.getMessage(type);
+		this.value = null;
 	}
 }
