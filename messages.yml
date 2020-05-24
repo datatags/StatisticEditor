@@ -10,6 +10,8 @@ invalid-entity: "&cCouldn't parse {argument} as an entity."
 invalid-material: "&cCouldn't parse {argument} as a material."
 # Invalid number for stat value
 invalid-value: "&cCouldn't parse value {value}"
+# Negative number for stat value
+negative-value: "&cYou cannot set stats to negative numbers."
 # Specified stat does not exist
 invalid-stat: "&cNot a valid stat: {stat}"
 # Argument does exist in Material enum but is not a block/item as required by the stat.

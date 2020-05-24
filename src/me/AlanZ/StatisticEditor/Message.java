@@ -11,7 +11,7 @@ public class Message {
 	protected String message;
 	protected Integer value = null;
 	public Message(String type) {
-		message = se.getMessage(type);
+		message = (type == null ? null : se.getMessage(type));
 	}
 	public Message setPlayer(Player player) {
 		if (player != null) {

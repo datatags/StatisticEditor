@@ -6,16 +6,21 @@ import java.util.List;
 import org.bukkit.command.CommandSender;
 
 public class CompoundMessage extends Message {
-	private List<String> messages = new ArrayList<>();
-	private String type;
+	protected List<String> messages = new ArrayList<>();
+	protected String type = null;
+	public CompoundMessage() {
+		super(null);
+	}
 	public CompoundMessage(String type) {
-		super(type);
+		this();
 		this.type = type;
-		this.message = null;
 	}
 	public Message add() {
+		return add(this.type);
+	}
+	public Message add(String newType) {
 		if (message != null) messages.add(message);
-		this.reset(type);
+		this.reset(newType);
 		return this;
 	}
 	@Override
