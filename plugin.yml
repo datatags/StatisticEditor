@@ -1,7 +1,7 @@
 name: StatisticEditor
 version: 1.3
-author: AlanZ
-main: me.AlanZ.StatisticEditor.StatisticEditor
+author: Datatags
+main: me.Datatags.StatisticEditor.StatisticEditor
 api-version: 1.13
 softdepend: [PlaceholderAPI]
 commands:

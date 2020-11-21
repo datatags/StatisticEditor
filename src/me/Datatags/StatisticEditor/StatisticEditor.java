@@ -1,4 +1,4 @@
-package me.AlanZ.StatisticEditor;
+package me.Datatags.StatisticEditor;
 
 import java.io.File;
 import java.io.FileNotFoundException;

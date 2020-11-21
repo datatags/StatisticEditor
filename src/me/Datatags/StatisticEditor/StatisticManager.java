@@ -1,4 +1,4 @@
-package me.AlanZ.StatisticEditor;
+package me.Datatags.StatisticEditor;
 
 import java.util.ArrayList;
 import java.util.Comparator;

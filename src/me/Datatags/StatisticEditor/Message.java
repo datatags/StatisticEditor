@@ -1,4 +1,4 @@
-package me.AlanZ.StatisticEditor;
+package me.Datatags.StatisticEditor;
 
 import org.bukkit.Material;
 import org.bukkit.Statistic;
