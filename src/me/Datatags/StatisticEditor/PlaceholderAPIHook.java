@@ -1,5 +1,6 @@
 package me.Datatags.StatisticEditor;
 
+import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
@@ -30,6 +31,7 @@ public class PlaceholderAPIHook extends PlaceholderExpansion {
 	@Override
 	public String onPlaceholderRequest(Player p, String params) {
 		String[] args = params.split("-");
-		return StatisticManager.getStatValue(p, args[0], args.length > 1 ? args[1] : null).getValue() + "";
+		Statistic stat = StatisticManager.getStatistic(args[0]);
+		return StatisticManager.getStatValue(p, stat, args.length > 1 ? args[1] : null).getValue() + "";
 	}
 }

@@ -10,16 +10,19 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 public class StatisticManager {
-	
-	public static Message getStatValue(Player player, String statString, String arg) {
-		return setStatValue(player, statString, arg, null, false);
-	}
-	public static Message setStatValue(Player player, String statString, String arg, Integer rawValue, boolean relative) {
-		Statistic stat;
+	public static Statistic getStatistic(String statString) {
 		try {
-			stat = Statistic.valueOf(statString.toUpperCase());
+			return Statistic.valueOf(statString.toUpperCase());
 		} catch (IllegalArgumentException e) {
-			return new Message("invalid-stat").setStat(statString);
+			return null;
+		}
+	}
+	public static Message getStatValue(Player player, Statistic stat, String arg) {
+		return setStatValue(player, stat, arg, null, false);
+	}
+	public static Message setStatValue(Player player, Statistic stat, String arg, Integer rawValue, boolean relative) {
+		if (stat == null) {
+			return new Message("invalid-stat").setStat("null");
 		}
 		// two birds, one stone by comparing the booleans
 		if ((arg == null) != (stat.getType() == Statistic.Type.UNTYPED)) {

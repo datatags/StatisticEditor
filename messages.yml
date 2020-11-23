@@ -14,6 +14,8 @@ invalid-value: "&cCouldn't parse value {value}"
 negative-value: "&cYou cannot set stats to negative numbers."
 # Specified stat does not exist
 invalid-stat: "&cNot a valid stat: {stat}"
+# Invalid operator in /runifstat
+invalid-operator: "&cInvalid operator: {argument}"
 # Argument does exist in Material enum but is not a block/item as required by the stat.
 not-a-block: "&c{argument} is not a block."
 not-an-item: "&c{argument} is not an item."

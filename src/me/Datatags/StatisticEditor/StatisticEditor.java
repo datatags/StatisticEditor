@@ -16,6 +16,7 @@ public class StatisticEditor extends JavaPlugin {
 		Message.se = this;
 		loadMessages();
 		getCommand("statistic").setExecutor(new StatisticCommand());
+		getCommand("runifstat").setExecutor(new RunIfStatCommand());
 		if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
 			getLogger().info("PlaceholderAPI found, registering hook");
 			new PlaceholderAPIHook(this).register();

@@ -1,5 +1,5 @@
 name: StatisticEditor
-version: 1.3
+version: 1.4
 author: Datatags
 main: me.Datatags.StatisticEditor.StatisticEditor
 api-version: 1.13
@@ -9,10 +9,16 @@ commands:
         usage: /<command> <target> <statistic> [argument] [value]
         description: Sets or gets a statistic. If there is no argument for the statistic, omit it. If you want to get a statistic, don't put a value.
         aliases: stats
+    runifstat:
+        usage: /<command> <target> <statistic> [argument] <operator> <value> <command to run>
+        description: Runs the specified command if the equation is correct.
 permissions:
     statisticeditor.statistic:
         description: Use the /statistic command to read statistics.
         default: OP
     statisticeditor.editstatistic:
         description: Use the /statistic command to set statistics.
+        default: OP
+    statisticeditor.runifstat:
+        description: Use the /runifstat command to execute console commands.
         default: OP
