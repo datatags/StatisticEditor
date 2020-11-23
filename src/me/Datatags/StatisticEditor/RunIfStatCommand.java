@@ -56,11 +56,11 @@ public class RunIfStatCommand implements TabExecutor {
 		Player target = Bukkit.getPlayer(args[0]);
 		Statistic stat = StatisticManager.getStatistic(args[1]);
 		if (target == null) {
-			new Message("player-not-found").setPlayer(target).send(sender);
+			new Message("player-not-found").setPlayer(args[0]).send(sender);
 			return true;
 		}
 		if (stat == null) {
-			new Message("invalid-stat").setStat(stat).send(sender);
+			new Message("invalid-stat").setStat(args[1]).send(sender);
 			return true;
 		}
 		int offset = 0;
@@ -104,7 +104,7 @@ public class RunIfStatCommand implements TabExecutor {
 		for (int i = 5 + offset; i < args.length; i++) {
 			command.append(" " + args[i]);
 		}
-		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.toString());
+		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.toString().replace("%player%", target.getName()));
 		return true;
 	}
 	private boolean containsIgnoreCase(Set<String> set, String search) {
