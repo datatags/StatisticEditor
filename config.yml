@@ -1,0 +1,2 @@
+# Uses vanilla stat names in all commands instead of Spigot names (experimental)
+use vanilla stat names: false

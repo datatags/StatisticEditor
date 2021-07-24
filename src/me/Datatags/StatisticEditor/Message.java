@@ -26,7 +26,7 @@ public class Message {
 		return this;
 	}
 	public Message setStat(Statistic stat) {
-		setStat(stat.toString());
+		setStat(StatisticManager.getStatisticName(stat));
 		return this;
 	}
 	public Message setStat(String stat) {

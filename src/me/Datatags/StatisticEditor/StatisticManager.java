@@ -1,21 +1,63 @@
 package me.Datatags.StatisticEditor;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Statistic;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+
 public class StatisticManager {
+	private static boolean isVanillaNames = false;
+	private static BiMap<Statistic,String> vanillaNames = null;
+	public static void setVanillaNames(boolean vanillaNames) {
+		isVanillaNames = vanillaNames;
+	}
 	public static Statistic getStatistic(String statString) {
-		try {
-			return Statistic.valueOf(statString.toUpperCase());
-		} catch (IllegalArgumentException e) {
-			return null;
+		if (!isVanillaNames) {
+			try {
+				return Statistic.valueOf(statString.toUpperCase());
+			} catch (IllegalArgumentException e) {
+				return null;
+			}
 		}
+		if (vanillaNames == null) setupNames();
+		return vanillaNames.inverse().get(statString);
+	}
+	@SuppressWarnings("unchecked")
+	private static void setupNames() {
+		try {
+			String bukkitVersion = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
+			Class<?> craftStatClass = Class.forName("org.bukkit.craftbukkit." + bukkitVersion + ".CraftStatistic");
+			Field mapField = craftStatClass.getDeclaredField("statistics");
+			mapField.setAccessible(true);
+			BiMap<Statistic, Object> statMap = ((BiMap<Object, Statistic>) mapField.get(null)).inverse();
+			Class<?> keyNameClass = statMap.values().iterator().next().getClass();
+			vanillaNames = HashBiMap.create(statMap.size());
+			if (keyNameClass.getName().equals("java.lang.String")) { // 1.12.2 and under
+				statMap.forEach((s,v) -> vanillaNames.put(s, ((String)v).replace("stat.", "")));
+				return;
+			}
+			Field[] fields = keyNameClass.getDeclaredFields();
+			Field keyNameField = fields[fields.length - 1];
+			keyNameField.setAccessible(true);
+			for (Statistic stat : Statistic.values()) {
+				vanillaNames.put(stat, (String) keyNameField.get(statMap.get(stat)));
+			}
+		} catch (SecurityException | IllegalAccessException | IllegalArgumentException | ClassNotFoundException | NoSuchFieldException e) {
+			e.printStackTrace();
+		}
+	}
+	public static String getStatisticName(Statistic stat) {
+		if (!isVanillaNames) return stat.name();
+		if (vanillaNames == null) setupNames();
+		return vanillaNames.get(stat);
 	}
 	public static Message getStatValue(Player player, Statistic stat, String arg) {
 		return setStatValue(player, stat, arg, null, false);
@@ -114,16 +156,16 @@ public class StatisticManager {
 		for (Statistic loopStat : Statistic.values()) {
 			sortedStats.add(loopStat);
 		}
-		sortedStats.sort(Comparator.comparing(Statistic::toString));
+		sortedStats.sort(Comparator.comparing(s -> getStatisticName(s)));
 		CompoundMessage msg = new CompoundMessage();
 		if (stat == null) {
 			for (Statistic loopStat : sortedStats) {
 				if (loopStat.getType() != Statistic.Type.UNTYPED) {
-					msg.add("all-stat-requires-argument").setStat(loopStat.toString()).setArgument(loopStat.getType().toString());
+					msg.add("all-stat-requires-argument").setStat(loopStat).setArgument(loopStat.getType().toString());
 				} else {
 					int value = target.getStatistic(loopStat);
 					if (nonZero && value == 0) continue;
-					msg.add("all-stat").setStat(loopStat.toString()).setValue(target.getStatistic(loopStat) + "");
+					msg.add("all-stat").setStat(loopStat).setValue(target.getStatistic(loopStat));
 				}
 			}
 		} else {

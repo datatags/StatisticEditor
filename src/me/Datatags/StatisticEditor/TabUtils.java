@@ -20,7 +20,7 @@ public class TabUtils {
 			options.add("NONZERO");
 		}
 		for (Statistic stat : Statistic.values()) {
-			options.add(stat.toString());
+			options.add(StatisticManager.getStatisticName(stat));
 		}
 	}
 	public static void addArgsOrAlt(List<String> options, String statString, String arg, boolean includeAll, List<String> alternatives) {

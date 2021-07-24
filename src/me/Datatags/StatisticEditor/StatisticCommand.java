@@ -38,21 +38,21 @@ public class StatisticCommand implements TabExecutor {
 			for (Statistic stat : Statistic.values()) {
 				sortedStats.add(stat);
 			}
-			sortedStats.sort(Comparator.comparing(Statistic::toString));
+			sortedStats.sort(Comparator.comparing(s -> StatisticManager.getStatisticName(s)));
 			for (Statistic stat : sortedStats) {
 				if (stat.getType() != Statistic.Type.UNTYPED) {
-					new Message("all-stat-requires-argument").setStat(stat.toString()).setArgument(stat.getType().toString()).send(sender);;
+					new Message("all-stat-requires-argument").setStat(stat).setArgument(stat.getType().toString()).send(sender);
 				} else {
 					int value = target.getStatistic(stat);
 					if (nonzero && value == 0) continue;
-					new Message("all-stat").setStat(stat.toString()).setValue(target.getStatistic(stat) + "").send(sender);
+					new Message("all-stat").setStat(stat).setValue(target.getStatistic(stat)).send(sender);
 				}
 			}
 			return true;
 		}
 		Statistic stat = StatisticManager.getStatistic(args[1]);
 		if (stat == null) {
-			new Message("invalid-stat").setStat(args[1]);
+			new Message("invalid-stat").setStat(args[1]).send(sender);
 			return true;
 		}
 		// command formats:

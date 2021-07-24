@@ -14,6 +14,8 @@ public class StatisticEditor extends JavaPlugin {
 	private YamlConfiguration messages = new YamlConfiguration();
 	public void onEnable() {
 		Message.se = this;
+		saveDefaultConfig();
+		StatisticManager.setVanillaNames(getConfig().getBoolean("use vanilla stat names", false));
 		loadMessages();
 		getCommand("statistic").setExecutor(new StatisticCommand());
 		getCommand("runifstat").setExecutor(new RunIfStatCommand());
