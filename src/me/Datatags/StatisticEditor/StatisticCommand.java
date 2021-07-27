@@ -37,7 +37,7 @@ public class StatisticCommand implements TabExecutor {
 		if (target == null) {
 			target = Bukkit.getPlayer(args[0]);
 		}
-		if (target == null) {
+		if (target == null || !target.hasPlayedBefore()) {
 			new Message("player-not-found").setPlayer(args[0]).send(sender);
 			return true;
 		}
