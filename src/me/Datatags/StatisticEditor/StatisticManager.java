@@ -1,15 +1,11 @@
 package me.Datatags.StatisticEditor;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Statistic;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
@@ -27,6 +23,9 @@ public class StatisticManager {
 				return null;
 			}
 		}
+		return getVanillaStatistic(statString);
+	}
+	private static Statistic getVanillaStatistic(String statString) {
 		if (vanillaNames == null) setupNames();
 		return vanillaNames.inverse().get(statString);
 	}
@@ -56,13 +55,16 @@ public class StatisticManager {
 	}
 	public static String getStatisticName(Statistic stat) {
 		if (!isVanillaNames) return stat.name();
+		return getVanillaStatisticName(stat);
+	}
+	private static String getVanillaStatisticName(Statistic stat) {
 		if (vanillaNames == null) setupNames();
 		return vanillaNames.get(stat);
 	}
-	public static Message getStatValue(Player player, Statistic stat, String arg) {
+	public static Message getStatValue(OfflinePlayer player, Statistic stat, String arg) {
 		return setStatValue(player, stat, arg, null, false);
 	}
-	public static Message setStatValue(Player player, Statistic stat, String arg, Integer rawValue, boolean relative) {
+	public static Message setStatValue(OfflinePlayer player, Statistic stat, String arg, Integer rawValue, boolean relative) {
 		if (stat == null) {
 			return new Message("invalid-stat").setStat("null");
 		}
@@ -150,45 +152,5 @@ public class StatisticManager {
 			player.setStatistic(stat, mat, value);
 			return new Message("stat-set-with-argument").setPlayer(player).setStat(stat).setValue(value).setArgument(mat);
 		}
-	}
-	public static Message getAllStats(Player target, Statistic stat, boolean nonZero) {
-		List<Statistic> sortedStats = new ArrayList<Statistic>();
-		for (Statistic loopStat : Statistic.values()) {
-			sortedStats.add(loopStat);
-		}
-		sortedStats.sort(Comparator.comparing(s -> getStatisticName(s)));
-		CompoundMessage msg = new CompoundMessage();
-		if (stat == null) {
-			for (Statistic loopStat : sortedStats) {
-				if (loopStat.getType() != Statistic.Type.UNTYPED) {
-					msg.add("all-stat-requires-argument").setStat(loopStat).setArgument(loopStat.getType().toString());
-				} else {
-					int value = target.getStatistic(loopStat);
-					if (nonZero && value == 0) continue;
-					msg.add("all-stat").setStat(loopStat).setValue(target.getStatistic(loopStat));
-				}
-			}
-		} else {
-			if (stat.getType() == Statistic.Type.UNTYPED) {
-				return new Message("player-stat").setPlayer(target).setStat(stat).setValue(target.getStatistic(stat));
-			} else if (stat.getType() == Statistic.Type.ENTITY) {
-				for (EntityType type : EntityType.values()) {
-					if (type == EntityType.UNKNOWN) continue; // it freaks out if you don't skip this one
-					int value = target.getStatistic(stat, type);
-					if (nonZero && value == 0) continue;
-					msg.add("all-stat-with-argument").setPlayer(target).setStat(stat).setArgument(type).setValue(value);
-					return msg;
-				}
-			}
-			boolean item = stat.getType() == Statistic.Type.ITEM;
-			for (Material mat : Material.values()) {
-				if (item && !mat.isItem())   continue;
-				if (!item && !mat.isBlock()) continue;
-				int value = target.getStatistic(stat, mat);
-				if (nonZero && value == 0) continue;
-				msg.add("all-stat-with-argument").setPlayer(target).setStat(stat).setArgument(mat).setValue(value);
-			}
-		}
-		return msg;
 	}
 }

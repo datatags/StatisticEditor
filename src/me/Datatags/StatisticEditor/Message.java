@@ -1,10 +1,10 @@
 package me.Datatags.StatisticEditor;
 
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Statistic;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
 
 public class Message {
 	protected static StatisticEditor se = null;
@@ -13,7 +13,7 @@ public class Message {
 	public Message(String type) {
 		message = (type == null ? null : se.getMessage(type));
 	}
-	public Message setPlayer(Player player) {
+	public Message setPlayer(OfflinePlayer player) {
 		if (player != null) {
 			setPlayer(player.getName());
 		}

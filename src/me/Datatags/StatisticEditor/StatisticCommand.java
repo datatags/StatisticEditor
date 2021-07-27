@@ -3,13 +3,14 @@ package me.Datatags.StatisticEditor;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Statistic;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
-import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.util.StringUtil;
 
@@ -27,7 +28,15 @@ public class StatisticCommand implements TabExecutor {
 		if (args.length < 2 || args.length > 4) {
 			return false;
 		}
-		Player target = Bukkit.getPlayer(args[0]);
+		UUID uuid = null;
+		OfflinePlayer target = null;
+		try {
+			uuid = UUID.fromString(args[0]);
+			target = Bukkit.getOfflinePlayer(uuid);
+		} catch (IllegalArgumentException e) {}
+		if (target == null) {
+			target = Bukkit.getPlayer(args[0]);
+		}
 		if (target == null) {
 			new Message("player-not-found").setPlayer(args[0]).send(sender);
 			return true;
