@@ -7,10 +7,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 
 public class Message {
-	protected static StatisticEditor se = null;
+    protected StatisticEditor se;
 	protected String message;
 	protected Integer value = null;
 	public Message(String type) {
+	    this.se = StatisticEditor.getInstance();
 		message = (type == null ? null : se.getMessage(type));
 	}
 	public Message setPlayer(OfflinePlayer player) {

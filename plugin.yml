@@ -1,5 +1,5 @@
 name: StatisticEditor
-version: 1.6
+version: 1.6.1
 author: Datatags
 main: me.datatags.statisticeditor.StatisticEditor
 api-version: 1.13

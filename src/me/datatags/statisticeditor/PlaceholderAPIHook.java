@@ -12,7 +12,7 @@ public class PlaceholderAPIHook extends PlaceholderExpansion {
 	}
 	@Override
 	public String getAuthor() {
-		return "AlanZ";
+		return se.getDescription().getAuthors().get(0);
 	}
 
 	@Override
@@ -24,10 +24,17 @@ public class PlaceholderAPIHook extends PlaceholderExpansion {
 	public String getVersion() {
 		return se.getDescription().getVersion();
 	}
+	
 	@Override
 	public boolean canRegister() {
 		return true;
 	}
+	
+	@Override
+	public boolean persist() {
+	    return true;
+	}
+	
 	@Override
 	public String onPlaceholderRequest(Player p, String params) {
 		String[] args = params.split("-");

@@ -10,10 +10,13 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class StatisticEditor extends JavaPlugin {
+    private static StatisticEditor instance;
 	private File messagesFile = new File(getDataFolder(), "messages.yml");
 	private YamlConfiguration messages = new YamlConfiguration();
-	public void onEnable() {
-		Message.se = this;
+	
+	@Override
+    public void onEnable() {
+		instance = this;
 		saveDefaultConfig();
 		StatisticManager.setVanillaNames(getConfig().getBoolean("use vanilla stat names", false));
 		loadMessages();
@@ -24,6 +27,7 @@ public class StatisticEditor extends JavaPlugin {
 			new PlaceholderAPIHook(this).register();
 		}
 	}
+	
 	private void loadMessages() {
 		if (!messagesFile.exists()) saveResource("messages.yml", false);
 		try {
@@ -40,7 +44,12 @@ public class StatisticEditor extends JavaPlugin {
 			e.printStackTrace();
 		}
 	}
+	
 	public String getMessage(String id) {
 		return ChatColor.translateAlternateColorCodes('&', messages.getString(id, "&cMissing message: " + id));
+	}
+	
+	public static StatisticEditor getInstance() {
+	    return instance;
 	}
 }
