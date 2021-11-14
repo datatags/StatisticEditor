@@ -1,4 +1,4 @@
-package me.Datatags.StatisticEditor;
+package me.datatags.statisticeditor;
 
 import org.bukkit.Statistic;
 import org.bukkit.entity.Player;

@@ -1,4 +1,4 @@
-package me.Datatags.StatisticEditor;
+package me.datatags.statisticeditor;
 
 import java.util.ArrayList;
 import java.util.Collections;

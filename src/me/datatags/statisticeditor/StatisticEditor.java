@@ -1,4 +1,4 @@
-package me.Datatags.StatisticEditor;
+package me.datatags.statisticeditor;
 
 import java.io.File;
 import java.io.FileNotFoundException;

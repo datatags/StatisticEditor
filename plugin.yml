@@ -1,7 +1,7 @@
 name: StatisticEditor
 version: 1.6
 author: Datatags
-main: me.Datatags.StatisticEditor.StatisticEditor
+main: me.datatags.statisticeditor.StatisticEditor
 api-version: 1.13
 softdepend: [PlaceholderAPI]
 commands:
